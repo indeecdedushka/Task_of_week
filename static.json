@@ -2,6 +2,7 @@
 "headers":{
 "/*":{
  "X-Author": "Кузнецов, Марк Сергеевич"
+ "Access-Control-Allow-Origin": "*"
     }
   }
 }
