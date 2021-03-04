@@ -6,7 +6,7 @@
   
   "headers": {
     "/*": {
-      "X-Author": 190511,
+      "X-Author": indeecdedushka,
       "Access-Control-Allow-Origin": "*"
     },
     "/login/": {
