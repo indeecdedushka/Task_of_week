@@ -1,30 +1,18 @@
-const http = require("http");
+import express from "express"
+import bodyParser from "body-parser"
+import { createReadStream, writeFileSync } from 'fs';
+import crypto from "crypto"
+import http from "http"
+import appSrc from "./app.js"
+import m from 'mongoose'
+import UserModel from './User.js';
+import puppeteer from 'puppeteer';
 
-http
-  .Server((req, res) => {
+const User = UserModel(m);
+const app = appSrc(express, bodyParser, createReadStream, writeFileSync, crypto, http, m, User, puppeteer);
 
-    console.log(req.url)
-    if (req.url === "/result4/") {
-      let CORS = {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
-        "Access-Control-Allow-Headers":
-          "x-test,Content-Type,Accept,Access-Control-Allow-Headers",
-      };
-
-      const result = {
-        message: "vyacheslavkirchuk",
-        "x-result": req.headers["x-test"],
-      };
-      let body = "";
-
-      req
-        .on("data", (data) => (body += data))
-        .on("end", () => {
-          result["x-body"] = body;
-          res.writeHead(200, {... CORS, "Content-Type": "application/json" });
-          res.end(JSON.stringify(result));
-        });
-    }
-  })
-  .listen(4321, () => console.log("Server Ok"));
+try {
+    app.listen(process.env.PORT || 4321);
+} catch(e) {
+    console.log(e.codeName);
+}
